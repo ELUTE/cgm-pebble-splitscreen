@@ -43,9 +43,9 @@ function fetchCgmData(lastReadTime, lastBG) {
 
     var response;
     var req = new XMLHttpRequest();
-    req.open('GET', "First Data Endpoint", true); //edit name below in message
+  req.open('GET', "https://testdexcgm.azurewebsites.net/pebble", true); //edit name below in message
     var req2 = new XMLHttpRequest();
-    req2.open('GET', "Second data endpoint", true); // edit name below in message 
+    req2.open('GET', "https://awsuperstar.azurewebsites.net/pebble", true); // edit name below in message 
 
     req.onload = function(e) {
         console.log(req.readyState);
@@ -63,7 +63,7 @@ function fetchCgmData(lastReadTime, lastBG) {
                     currentDelta = bgs[0].bgdelta,
                     currentTrend = DIRECTIONS(bgs[0].direction),
 
-                    delta = "Change: " + currentDelta + "mg/dL";
+                    delta = "Change: " + currentDelta + "mmol";
                 var battery = bgs[0].battery;
                 if (battery == undefined || battery == null)
                     battery = "";
@@ -73,23 +73,23 @@ function fetchCgmData(lastReadTime, lastBG) {
                     currentDelta = "+" + currentDelta;
 
 
-                if (currentBG < 55)
+                if (currentBG < 3.0)
                     alertValue = 2;
-                else if (currentBG < 60 && currentDelta < 0)
+                else if (currentBG < 3.3 && currentDelta < 0)
                     alertValue = 2;
-                else if (currentBG < 70 && sinceLastAlert > TIME_15_MINS)
+                else if (currentBG < 4.0 && sinceLastAlert > TIME_15_MINS)
                     alertValue = 2;
-                else if (currentBG < 120 && currentTrend == 7) //DBL_DOWN
+                else if (currentBG < 6.6 && currentTrend == 7) //DBL_DOWN
                     alertValue = 2;
-                else if (currentBG == 100 && currentTrend !== 0) //PERFECT SCORE
+                else if (currentBG == 5.5 && currentTrend !== 0) //PERFECT SCORE
                     alertValue = 1;
-                else if (currentBG > 120 && currentTrend == 1) //DBL_UP
+                else if (currentBG > 6.6 && currentTrend == 1) //DBL_UP
                     alertValue = 3;
-                else if (currentBG > 200 && sinceLastAlert > TIME_30_MINS && currentDelta > 0)
+                else if (currentBG > 10.0 && sinceLastAlert > TIME_30_MINS && currentDelta > 0)
                     alertValue = 3;
-                else if (currentBG > 250 && sinceLastAlert > TIME_30_MINS)
+                else if (currentBG > 14.0 && sinceLastAlert > TIME_30_MINS)
                     alertValue = 3;
-                else if (currentBG > 300 && sinceLastAlert > TIME_15_MINS)
+                else if (currentBG > 16.0 && sinceLastAlert > TIME_15_MINS)
                     alertValue = 3;
 
                 if (alertValue > 0) {
@@ -112,11 +112,11 @@ function fetchCgmData(lastReadTime, lastBG) {
                         bg: currentBG,
                         readtime: formatDate(new Date(bgs[0].datetime)),
                         icon: currentTrend,
-                        delta: battery + " FIRSTNAME " + currentDelta,
+                        delta: battery + " SYDNEY " + currentDelta,
                         icon2: DIRECTIONS(response2.bgs[0].direction),
                         bg2: response2.bgs[0].sgv,
                         readtime2: formatDate(new Date(response2.bgs[0].datetime)),
-                        delta2: battery2 + " SECONDNAME " + response2.bgs[0].bgdelta
+                        delta2: battery2 + " ANNELISE " + response2.bgs[0].bgdelta
 
                     };
 
