@@ -43,9 +43,9 @@ function fetchCgmData(lastReadTime, lastBG) {
 
     var response;
     var req = new XMLHttpRequest();
-  req.open('GET', "https://testdexcgm.azurewebsites.net/pebble", true); //edit name below in message
+  req.open('GET', "https://NAME.azurewebsites.net/pebble", true); //edit name below in message
     var req2 = new XMLHttpRequest();
-    req2.open('GET', "https://awsuperstar.azurewebsites.net/pebble", true); // edit name below in message 
+    req2.open('GET', "https://NAME.azurewebsites.net/pebble", true); // edit name below in message 
 
     req.onload = function(e) {
         console.log(req.readyState);
